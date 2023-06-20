@@ -30,7 +30,6 @@ http://localhost:8000/details/1 - book details page
 additional
 http://localhost:8000/delete/1 - book delete page
 
-
 http://localhost:8000/profile/ -  details profile page
 http://localhost:8000/profile/edit/ - edit profile page
 http://localhost:8000/profile/delete/ - delete profile page
