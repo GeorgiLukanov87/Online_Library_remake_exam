@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 from Online_Library_remake_exam.my_web.forms import ProfileCreateForm, ProfileEditForm, ProfileDeleteForm, \
-    BookCreateForm
+    BookCreateForm, BookEditForm
 from Online_Library_remake_exam.my_web.models import ProfileModel, BookModel
 
 
@@ -10,8 +10,11 @@ def get_profile():
 
 
 def get_all_books():
-    return BookModel.objects.all()
+    return BookModel.objects.all().order_by('id')
 
+
+def get_current_book(pk):
+    return BookModel.objects.filter(pk=pk).get()
 
 
 def index(request):
@@ -90,14 +93,28 @@ def add_book(request):
 
 
 def edit_book(request, pk):
-    return render(request, 'book/edit-book.html')
+    book = get_current_book(pk)
 
+    if request.method == 'GET':
+        form = BookEditForm(instance=book)
+    else:
+        form = BookEditForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('details-book',pk)
 
-def details_book(request, pk):
-    book = BookModel.objects.filter(pk=pk).get()
-    context = {'book': book, }
-    return render(request, 'book/book-details.html', context, )
+    context = {'form': form, 'book': book, }
+
+    return render(request, 'book/edit-book.html', context, )
 
 
 def delete_book(request, pk):
-    pass
+    book = get_current_book(pk)
+    book.delete()
+    return redirect('index')
+
+
+def details_book(request, pk):
+    book = get_current_book(pk)
+    context = {'book': book, }
+    return render(request, 'book/book-details.html', context, )

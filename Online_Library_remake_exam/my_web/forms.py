@@ -95,3 +95,7 @@ class BookBaseForm(forms.ModelForm):
 
 class BookCreateForm(BookBaseForm):
     pass
+
+
+class BookEditForm(BookBaseForm):
+    pass
