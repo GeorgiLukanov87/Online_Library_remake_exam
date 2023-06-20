@@ -23,7 +23,8 @@ def index(request):
 
     if not profile:
         return redirect('create-profile')
-    context = {'books': books, }
+
+    context = {'books': books, 'profile': profile, }
     return render(request, 'common/home-with-profile.html', context, )
 
 
@@ -79,6 +80,7 @@ def delete_profile(request):
 
 # Books views:
 def add_book(request):
+    profile = get_profile()
     if request.method == 'GET':
         form = BookCreateForm()
     else:
@@ -87,12 +89,13 @@ def add_book(request):
             form.save()
             return redirect('index')
 
-    context = {'form': form, }
+    context = {'form': form, 'profile': profile, }
 
     return render(request, 'book/add-book.html', context, )
 
 
 def edit_book(request, pk):
+    profile = get_profile()
     book = get_current_book(pk)
 
     if request.method == 'GET':
@@ -101,9 +104,9 @@ def edit_book(request, pk):
         form = BookEditForm(request.POST, instance=book)
         if form.is_valid():
             form.save()
-            return redirect('details-book',pk)
+            return redirect('details-book', pk)
 
-    context = {'form': form, 'book': book, }
+    context = {'form': form, 'book': book, 'profile': profile, }
 
     return render(request, 'book/edit-book.html', context, )
 
@@ -115,6 +118,7 @@ def delete_book(request, pk):
 
 
 def details_book(request, pk):
+    profile = get_profile()
     book = get_current_book(pk)
-    context = {'book': book, }
+    context = {'book': book, 'profile': profile, }
     return render(request, 'book/book-details.html', context, )
