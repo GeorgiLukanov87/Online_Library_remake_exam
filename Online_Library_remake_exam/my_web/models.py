@@ -11,11 +11,14 @@ class ProfileModel(models.Model):
 # Book model
 class BookModel(models.Model):
     CHOICES = (
-        ('1.Fantasy', 'Fantasy'),
-        ('2.Roman', 'Roman'),
-        ('3.Study', 'Study'),
-        ('4.Modern', 'Modern'),
-        ('5.Horror', 'Horror'),
+        ('1.Fiction', 'Fiction'),
+        ('2.Novel', 'Novel'),
+        ('3.Crime', 'Crime'),
+        ('4.Fantasy', 'Fantasy'),
+        ('5.Roman', 'Roman'),
+        ('6.Study', 'Study'),
+        ('7.Modern', 'Modern'),
+        ('8.Horror', 'Horror'),
     )
 
     title = models.CharField(max_length=30)
