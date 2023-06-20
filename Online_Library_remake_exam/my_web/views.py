@@ -9,13 +9,14 @@ def get_profile():
     return ProfileModel.objects.first()
 
 
-def get_books():
+def get_all_books():
     return BookModel.objects.all()
+
 
 
 def index(request):
     profile = get_profile()
-    books = get_books()
+    books = get_all_books()
 
     if not profile:
         return redirect('create-profile')
@@ -93,7 +94,9 @@ def edit_book(request, pk):
 
 
 def details_book(request, pk):
-    return render(request, 'book/book-details.html')
+    book = BookModel.objects.filter(pk=pk).get()
+    context = {'book': book, }
+    return render(request, 'book/book-details.html', context, )
 
 
 def delete_book(request, pk):

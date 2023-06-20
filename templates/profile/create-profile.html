@@ -5,8 +5,10 @@
         <form id="register-form" action="{% url 'create-profile' %}" method="post">
             <fieldset>
                 <legend>Create Profile</legend>
+
                 {{ form }}
                 {% csrf_token %}
+
                 <input class="button submit" type="submit" value="Enter">
             </fieldset>
         </form>
